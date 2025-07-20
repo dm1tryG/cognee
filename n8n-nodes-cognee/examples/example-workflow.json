@@ -1,0 +1,85 @@
+{
+  "name": "Cognee Example Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "This is example content about artificial intelligence and machine learning.",
+        "datasetName": "ai-knowledge"
+      },
+      "id": "1",
+      "name": "Add Content",
+      "type": "n8n-nodes-cognee.cognee",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "credentials": {
+        "cogneeApi": {
+          "id": "1",
+          "name": "Cognee API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "datasets": "ai-knowledge",
+        "runInBackground": false
+      },
+      "id": "2",
+      "name": "Cognify",
+      "type": "n8n-nodes-cognee.cognee",
+      "typeVersion": 1,
+      "position": [450, 300],
+      "credentials": {
+        "cogneeApi": {
+          "id": "1",
+          "name": "Cognee API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "query": "What is machine learning?",
+        "searchType": "GRAPH_COMPLETION",
+        "searchDatasets": "ai-knowledge",
+        "topK": 5
+      },
+      "id": "3",
+      "name": "Search",
+      "type": "n8n-nodes-cognee.cognee",
+      "typeVersion": 1,
+      "position": [650, 300],
+      "credentials": {
+        "cogneeApi": {
+          "id": "1",
+          "name": "Cognee API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Add Content": {
+      "main": [
+        [
+          {
+            "node": "Cognify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cognify": {
+      "main": [
+        [
+          {
+            "node": "Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "1"
+}
